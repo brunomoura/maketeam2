@@ -1,0 +1,172 @@
+<html>
+<head>
+	<link rel="stylesheet" href="{{ STATIC_URL }}css/jquery.ui.all.css">
+	<script src="{{ STATIC_URL }}js/jquery-1.7.2.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.core.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.widget.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.position.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.autocomplete.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.mouse.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.draggable.js"></script>
+	<script src="{{ STATIC_URL }}js/jquery.ui.droppable.js"></script>
+	<style type="text/css">
+	.container{
+		width:720px;
+		height: 800px;
+		float:left;
+	}
+	.logo{
+		width: 711px;
+		height: 150px;
+		float: left;
+	}
+	.img-logo{
+		float:left;
+	}
+	.topo-direito {
+		height:120px;
+		width:458px;
+		float:left;
+		padding: 15px;
+	}
+	.anuncio1,.anuncio2{
+		width:160px;
+		height:600px;
+		float:left;
+		background: #666;
+	}
+	.campo{
+		width:391px;
+		height:626px;
+		background: url("{{ STATIC_URL }}img/campo.jpg");
+		float:left;
+	}
+	#banco-reserva{
+		width:50px;
+		height:50px;
+		background:#ccc;
+		border-radius:12px;
+		border:1px dotted red;
+		float:left;
+		padding: 35px;
+
+	}
+	.botao{
+		float:left;
+		width: 124px;
+		height: 28px;
+		background: #019933;
+		color: yellow;
+		margin-top: 34px;
+		line-height:26px;
+		text-align:center;
+		border-radius: 12px;
+	}
+	#compartilhar {
+		margin-left: 10px;
+	}
+</style>
+	
+	<script type="text/javascript">
+		$(function() {
+
+		$( ".draggable" ).draggable({ revert: "valid" });
+		$( ".draggable2" ).draggable({ revert: "invalid" });
+
+		$( "#droppable" ).droppable({
+			activeClass: "ui-state-hover",
+			hoverClass: "ui-state-active",
+			drop: function( event, ui ) {
+				$( this )
+					.addClass( "ui-state-highlight" )
+					.find( "p" )
+						.html( "Dropped!" );
+			}
+		});
+
+		$( "#city" ).autocomplete({
+			source: friends,
+			minLength: 2,
+			select: function( event, ui ) {
+				//console.log($(".draggable2"));
+				
+				if ($(".draggable2").length < 11){
+					
+					for (var i=0;i < $(".draggable2").length; i++){
+						if ($(".draggable2").eq(i).attr('data-id') == ui.item.id){
+							alert("jogador já escalado!");
+							return false;
+						}
+					}
+					$("#banco-reserva").append("<img data-id='"+ ui.item.id +"' style='position:absolute;display:none' class='draggable2 ui-widget-content' src='http://graph.facebook.com/" + ui.item.id + "/picture' />");
+					$( ".draggable2" ).draggable({ revert: "invalid" });
+					setTimeout(function(){
+						$("#banco-reserva img").fadeIn("slow");
+						$("#city").val("");
+					}, 1000);
+				}else{
+					alert("time completo");
+				}
+				
+			}
+		});
+		$("#sortear").click(function(){
+			
+		});
+
+
+	});
+
+	</script>
+
+</head>
+<body>
+	
+	<script type="text/javascript">
+var friends = {{ friends|safe }}
+</script>
+<div class="container">
+		<div class="logo">
+			<img class="img-logo" src="{{ STATIC_URL }}img/logo-make-team.png">
+			<div class="topo-direito">
+				<table>
+					<tr>
+						<td>
+							<label style="font-size:13px">Faça seu time escalando e arrastando seus amigos para o campo</label>
+						</td>
+						<td rowspan="3">
+							<div id="banco-reserva">
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<div class="demo" style="width:300px;float: left;">
+							<div class="ui-widget">
+								
+								<input id="city" style="width:250px;" />
+							</div>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<span id="sortear" class="botao">Sortear</span>
+							<span id="compartilhar" class="botao">Compartilhar</span>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div class="anuncio1">
+		</div>
+		<div id="droppable" class="campo ui-widget-header">
+		</div>
+		<div class="anuncio2">
+		</div>
+</div>
+
+
+
+</body>
+</html>
