@@ -10,6 +10,7 @@ urlpatterns = patterns('',
         'template': 'home.html'
     }, name='home'),
     url(r'^time/$', 'app.views.time', name='time'),
+    url(r'^compartilhar', 'app.views.compartilhar', name='compartilhar'),
     # url(r'^maketeam/', include('maketeam.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

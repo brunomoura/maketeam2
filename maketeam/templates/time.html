@@ -164,12 +164,12 @@
 					var y = $("#foto"+i).css("top");
 					dados.push({"id":id , "x":x , "y":y})
 				}
-				// console.log(data);
+				console.log(dados)
 				$.ajax({
 		     		type: "POST",
 		     		url: "/compartilhar/",
-		     		data: dados,
-		     		dataType:"text",
+		     		data: {"dados" : dados}, 
+		     		dataType:"json",
 		     		success: function(conteudo){    			
 		     			
 		     			console.log("ok");

@@ -1,32 +1,31 @@
 import Image
 import urllib2
 import cStringIO
-import os
-
-def montar_imagem():
-
-	foto = cStringIO.StringIO(urllib2.urlopen("http://profile.ak.fbcdn.net/hprofile-ak-snc4/50084_100003016125914_1874164856_q.jpg").read())
-	
+from django.conf import settings
 
 
-	foto = Image.open(foto)
+def montar_imagem(dic):
 
-	fundo = Image.open("campo.jpg") 
-
-	fundo.paste(foto, (70,193))
-
-	fundo.save("teste.jpg","jpeg")
-	
-	# asdasd = {"data" : [
-	# {"id" : "121231"	,"x": "4","y": "5"},
-	# {"id" : "121231"	,"x": "4","y": "5"},
-	# {"id" : "121231"	,"x": "4","y": "5"},
-	# {"id" : "121231"	,"x": "4","y": "5"},
-	# {"id" : "121231"	,"x": "4","y": "5"},
-	# {"id" : "121231"	,"x": "4","y": "5"},
-	# {"id" : "121231"	,"x": "4","y": "5"},
-	# {"id" : "121231"	,"x": "4","y": "5"},
-	# {"id" : "121231"	,"x": "4","y": "5"}]
+	fundo = Image.open('/home/bruno/projetos django/maketeam2/maketeam/static/img/campo.jpg') 
+	# dic = {"data" : [
+	# {"id" : "100003016125914"	,"x": "40","y": "50"}]
 	# }
 
-montar_imagem()
+	for i in range(0,11):
+		x = "dados[%d][x]" % (i)
+		y = "dados[%d][y]" % (i) 
+
+		x = int(dic[x][0:2])-160 
+		y = int(dic[y][0:2])-150 
+
+		user_id = "dados[%s][id]" % (str(i))
+		url = "https://graph.facebook.com/%s/picture" % str(dic[user_id])
+
+		foto = cStringIO.StringIO(urllib2.urlopen(url).read()) 
+		foto = Image.open(foto)
+		fundo.paste(foto, (x, y))
+
+	fundo.save("/home/bruno/projetos django/maketeam2/maketeam/static/img/teste.jpg","jpeg")
+	imagem = "/home/bruno/projetos django/maketeam2/maketeam/static/img/teste.jpg"
+	return imagem
+	
