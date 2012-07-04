@@ -12,8 +12,11 @@
 	<style type="text/css">
 	.container{
 		width:720px;
-		height: 800px;
+		height: 780px;
 		float:left;
+		border-radius: 17px;
+		box-shadow:1px 1px 11px #ccc inset;
+		background: #F9F9F9;
 	}
 	.logo{
 		width: 711px;
@@ -33,7 +36,6 @@
 		width:160px;
 		height:600px;
 		float:left;
-		background: #666;
 	}
 	.campo{
 		width:391px;
@@ -64,6 +66,11 @@
 	}
 	.botao:hover {
 		cursor: pointer;
+		color:#019933;
+		background: yellow;
+	}
+	.botao:active{
+		background:orange;
 	}
 	#compartilhar {
 		margin-left: 10px;
@@ -130,7 +137,7 @@
 		    			var nome = friends[numero]['name'];
 		    			arrayNumeros.push(numero);
 		    			arrayIds.push({"id":id,"nome":nome});
-		    			$("#banco-reserva").append("<img id='foto"+ contador+1 +"' data-id='"+ id +"' style='position:absolute;top: "+ posicoes[contador].y +"px;left: "+ posicoes[contador].x +"px;display:none' class='draggable2 ui-widget-content' src='http://graph.facebook.com/" + id + "/picture' />");
+		    			$("#banco-reserva").append("<img id='foto"+ (contador+1) +"' data-id='"+ id +"' style='position:absolute;top: "+ posicoes[contador].y +"px;left: "+ posicoes[contador].x +"px;display:none' class='draggable2 ui-widget-content' src='http://graph.facebook.com/" + id + "/picture' />");
 		    			contador++;
 		    		}
 		    		if (arrayIds.length == 11){
@@ -146,6 +153,27 @@
 				$("#sortear").html("Sortear");
 
 		    	
+		});
+
+		$("#compartilhar").click(function(){
+				dados = [];
+				for (var i = 1; i < 12;i++){
+					var id = $("#foto"+i).attr("data-id");
+					var x = $("#foto"+i).css("left");
+					var y = $("#foto"+i).css("top");
+					dados.push({"id":id , "x":x , "y":y})
+				}
+				// console.log(data);
+				$.ajax({
+		     		type: "POST",
+		     		url: "/compartilhar/",
+		     		data: dados,
+		     		dataType:"text",
+		     		success: function(conteudo){    			
+		     			
+		     			console.log("ok");
+		     		}
+		     	});
 		});
 
 
@@ -205,10 +233,33 @@ var posicoes = [{"x":"256", "y":"230"},
 			</div>
 		</div>
 		<div class="anuncio1">
+			<script type="text/javascript"><!--
+			google_ad_client = "ca-pub-3904080299266142";
+			/* maketeam2_left */
+			google_ad_slot = "3828934729";
+			google_ad_width = 160;
+			google_ad_height = 600;
+			//-->
+			</script>
+			<script type="text/javascript"
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
 		</div>
 		<div id="droppable" class="campo ui-widget-header">
 		</div>
 		<div class="anuncio2">
+			<script type="text/javascript"><!--
+			google_ad_client = "ca-pub-3904080299266142";
+			/* maketeam2_right */
+			google_ad_slot = "3269083765";
+			google_ad_width = 160;
+			google_ad_height = 600;
+			//-->
+			</script>
+			<script type="text/javascript"
+			src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+			</script>
+
 		</div>
 </div>
 
