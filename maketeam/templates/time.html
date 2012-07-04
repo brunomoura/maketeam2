@@ -62,7 +62,7 @@
 		height: 28px;
 		background: #019933;
 		color: yellow;
-		margin-top: 34px;
+		margin-top: 27px;
 		line-height:26px;
 		text-align:center;
 		border-radius: 12px;
@@ -126,7 +126,6 @@
 		$("#sortear").click(function(){
 			arrayNumeros = new Array();
 		    	arrayIds = new Array();
-		    	$("#sortear").html("Sorteando...");
 		    	$("#banco-reserva").html("");
 		    	var contador = 0;
 		    	// console.log(friends);
@@ -153,7 +152,6 @@
 						$("#banco-reserva img").fadeIn("slow");
 					}, 1000);
 				$( ".draggable2" ).draggable({ revert: "invalid" });
-				$("#sortear").html("Sortear");
 
 		    	
 		});
@@ -220,16 +218,20 @@ var posicoes = [{"x":"256", "y":"230"},
 						<td>
 							<div class="demo" style="width:300px;float: left;">
 							<div class="ui-widget">
-								
-								<input id="city" style="width:250px;" />
+								<div class="input-prepend">
+									<span class="add-on"><i class="icon-user"></i></span>
+									<input id="city" type="text" style="width:250px;height:28px;" />
+								</div>
 							</div>
 							</div>
 						</td>
 					</tr>
 					<tr>
 						<td>
-							<span id="sortear" class="botao">Sortear</span>
-							<span id="compartilhar" class="botao">Compartilhar</span>
+							<!-- <span id="sortear" class="botao">Sortear</span> -->
+							<!-- <span id="compartilhar" class="botao">Compartilhar</span> -->
+							<a href="#" rel='tooltip' title="Escalar time aleatoriamente" style="margin: 28px 0 0 28px" id="sortear" class="btn btn-primary"><i class="icon-random icon-white" style="margin-top:1px;"></i> Sortear</a>
+							<a href="#" rel='tooltip' title="Compartilhar time no facebook" style="margin-top:28px;" id="compartilhar" class="btn btn-primary"><i class="icon-share icon-white"></i> Compartilhar</a>
 						</td>
 					</tr>
 				</table>
