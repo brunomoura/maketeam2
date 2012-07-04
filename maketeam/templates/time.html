@@ -9,6 +9,9 @@
 	<script src="{{ STATIC_URL }}js/jquery.ui.mouse.js"></script>
 	<script src="{{ STATIC_URL }}js/jquery.ui.draggable.js"></script>
 	<script src="{{ STATIC_URL }}js/jquery.ui.droppable.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.css">
+	<!-- <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css"> -->
+	<script type="text/javascript" href="{{ STATIC_URL }}js/bootstrap.js"></script>
 	<style type="text/css">
 	.container{
 		width:720px;
@@ -108,7 +111,7 @@
 							return false;
 						}
 					}
-					$("#banco-reserva").append("<img data-id='"+ ui.item.id +"' style='position:absolute;display:none' class='draggable2 ui-widget-content' src='http://graph.facebook.com/" + ui.item.id + "/picture' />");
+					$("#banco-reserva").append("<img data-id='"+ ui.item.id +"' style='position:absolute;display:none' rel='tooltip' title='"+ ui.item.name +"' class='draggable2 ui-widget-content' src='http://graph.facebook.com/" + ui.item.id + "/picture' />");
 					$( ".draggable2" ).draggable({ revert: "invalid" });
 					setTimeout(function(){
 						$("#banco-reserva img").fadeIn("slow");
@@ -137,7 +140,7 @@
 		    			var nome = friends[numero]['name'];
 		    			arrayNumeros.push(numero);
 		    			arrayIds.push({"id":id,"nome":nome});
-		    			$("#banco-reserva").append("<img id='foto"+ (contador+1) +"' data-id='"+ id +"' style='position:absolute;top: "+ posicoes[contador].y +"px;left: "+ posicoes[contador].x +"px;display:none' class='draggable2 ui-widget-content' src='http://graph.facebook.com/" + id + "/picture' />");
+		    			$("#banco-reserva").append("<img id='foto"+ (contador+1) +"' data-id='"+ id +"' style='position:absolute;top: "+ posicoes[contador].y +"px;left: "+ posicoes[contador].x +"px;display:none' rel='tooltip' title='"+ nome +"' class='draggable2 ui-widget-content' src='http://graph.facebook.com/" + id + "/picture' />");
 		    			contador++;
 		    		}
 		    		if (arrayIds.length == 11){
