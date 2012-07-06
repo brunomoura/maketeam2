@@ -157,6 +157,7 @@
 		});
 
 		$("#compartilhar").click(function(){
+				var token = $("#token").val() 
 				dados = [];
 				for (var i = 1; i < 12;i++){
 					var id = $("#foto"+i).attr("data-id");
@@ -164,11 +165,11 @@
 					var y = $("#foto"+i).css("top");
 					dados.push({"id":id , "x":x , "y":y})
 				}
-				console.log(dados)
+				
 				$.ajax({
 		     		type: "POST",
-		     		url: "/compartilhar/",
-		     		data: {"dados" : dados}, 
+		     		url: "/compartilhar",
+		     		data: {"dados" : dados, "token": token}, 
 		     		dataType:"json",
 		     		success: function(conteudo){    			
 		     			
@@ -201,6 +202,7 @@ var posicoes = [{"x":"256", "y":"230"},
 				]
 </script>
 <div class="container">
+		<input type="hidden" value="{{ token }}" id="token" style="position: absolute; top: 283px; right: 58px;">
 		<div class="logo">
 			<img class="img-logo" src="{{ STATIC_URL }}img/logo-make-team.png">
 			<div class="topo-direito">
