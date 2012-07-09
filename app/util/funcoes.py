@@ -29,3 +29,19 @@ def montar_imagem(dic):
 	imagem = "/home/bruno/projetos django/maketeam2/maketeam/static/img/teste.jpg"
 	return imagem
 	
+# def montar_marcacao(dic):
+
+# 	tags = []
+
+# 	for i in range(0,11):
+# 		x = "dados[%d][x]" % (i)
+# 		y = "dados[%d][y]" % (i) 
+
+# 		x = int(dic[x][0:3])-160 
+# 		y = int(dic[y][0:3])-150
+		
+# 		user_id = "dados[%s][id]" % (str(i))
+
+# 		tags.append({'tag_uid': user_id, 'x': '30', 'y': '50'})
+
+# 	return "'%s'" % tags
