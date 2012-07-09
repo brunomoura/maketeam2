@@ -163,7 +163,16 @@
 		});
 
 		$("#compartilhar").click(function(){
-				var token = $("#token").val() 
+				
+				if ($(".draggable2").length == 11){
+					$('#myModal').modal('toggle');
+				}
+
+				
+		});
+
+		$("#modal-compartilhar").click(function(){
+			var token = $("#token").val() 
 				dados = [];
 				for (var i = 1; i < 12;i++){
 					var id = $("#foto"+i).attr("data-id");
@@ -171,8 +180,7 @@
 					var y = $("#foto"+i).css("top");
 					dados.push({"id":id , "x":x , "y":y})
 				}
-				
-				$.ajax({
+			$.ajax({
 		     		type: "POST",
 		     		url: "/compartilhar",
 		     		data: {"dados" : dados, "token": token}, 
@@ -182,6 +190,10 @@
 		     			console.log("ok");
 		     		}
 		     	});
+		});
+
+		$(".close-modal").click(function(){
+				$('#myModal').modal('hide');
 		});
 
 
@@ -211,15 +223,22 @@ var posicoes = [{"x":"256", "y":"230"},
 <div class="container">
 	<div class="modal hide" id="myModal">
     <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal">×</button>
+    <button type="button" class="close close-modal" data-dismiss="modal">×</button>
     <h3>Confirmação de compartilhamento</h3>
     </div>
     <div class="modal-body">
     <p>Seu time será postado em seu álbum no facebook e seus amigos serão marcados na foto como a imagem a seguir:</p>
+    <div style="width:260px;height:325px;float:left;">
+    	<img src="{{ STATIC_URL }}img/post.png" />
+	</div>
+	<div style="width:250px;height:200px;float:left;">
+    	<p>Para compartilhar sua escalação, dê um nome ao seu time e clique em compartilhar</p>
+    	<input type="text" name="nomeTime" placeholder="Nome do time" style="width:250px;height:28px;" />
+	</div>
     </div>
     <div class="modal-footer">
-    <a href="#" class="btn" data-dismiss="modal">Close</a>
-    <a href="#" class="btn btn-primary">Save changes</a>
+    <a href="#" class="btn close-modal" data-dismiss="modal">Cancelar</a>
+    <a href="#" id="modal-compartilhar" class="btn btn-primary">Compartilhar</a>
     </div>
     </div>
 
