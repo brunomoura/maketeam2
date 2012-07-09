@@ -59,6 +59,7 @@
 		border:1px dotted red;
 		float:left;
 		padding: 10px;
+		margin-left: 31px;
 
 	}
 	.botao{
@@ -190,15 +191,7 @@
 
 </head>
 <body>
-	<!-- Script facebook -->
-	<!--<div id="fb-root"></div>
-	<script>(function(d, s, id) {
-	  var js, fjs = d.getElementsByTagName(s)[0];
-	  if (d.getElementById(id)) return;
-	  js = d.createElement(s); js.id = id;
-	  js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=453993637951423";
-	  fjs.parentNode.insertBefore(js, fjs);
-	}(document, 'script', 'facebook-jssdk'));</script> -->
+
 	
 	<script type="text/javascript">
 var friends = {{ friends|safe }}
@@ -216,6 +209,21 @@ var posicoes = [{"x":"256", "y":"230"},
 				]
 </script>
 <div class="container">
+	<div class="modal hide" id="myModal">
+    <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3>Confirmação de compartilhamento</h3>
+    </div>
+    <div class="modal-body">
+    <p>Seu time será postado em seu álbum no facebook e seus amigos serão marcados na foto como a imagem a seguir:</p>
+    </div>
+    <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <a href="#" class="btn btn-primary">Save changes</a>
+    </div>
+    </div>
+
+
 		<input type="hidden" value="{{ token }}" id="token" style="position: absolute; top: 283px; right: 58px;">
 		<div class="logo">
 			<img class="img-logo" src="{{ STATIC_URL }}img/logo-make-team.png">
@@ -226,7 +234,7 @@ var posicoes = [{"x":"256", "y":"230"},
 							<label style="font-size:13px">Faça seu time escalando e arrastando seus amigos para o campo</label>
 						</td>
 						<td rowspan="3">
-							<div class="fb-like" data-href="http://www.facebook.com/curtindoarisada" data-send="false" data-width="450" data-show-faces="true"></div>
+							<div style="margin:0 0 23px 31px;" class="fb-like" data-href="http://www.facebook.com/curtindoarisada" data-send="false" data-width="140" data-show-faces="false" data-layout="button_count"></div>
 							<div id="banco-reserva">
 							</div>
 						</td>
