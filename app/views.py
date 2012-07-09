@@ -12,11 +12,8 @@ from facepy import SignedRequest
 # @facebook_authorization_required
 def time(request):
 	friends = request.facebook.user.graph.get('me/friends')
-
-	# usuario = request.facebook.user.graph.get('me')
-
-	# string = '{"name": "%s %s", "id": "%s" }' % (usuario['first_name'], usuario['last_name'], usuario['id'] )
-	
+	usuario = {u"name": request.facebook.user.first_name+' '+request.facebook.user.last_name, u"id": request.facebook.user.facebook_id} 
+	friends['data'].append(usuario)
 	token = request.REQUEST["signed_request"]
 	context = {}
 	context['friends'] = json.dumps(friends['data'])
