@@ -16,7 +16,7 @@
 	<script src="{{ STATIC_URL }}js/jquery.ui.droppable.js"></script>
 	<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap.css">
 	<!-- <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}css/bootstrap-responsive.css"> -->
-	<script type="text/javascript" href="{{ STATIC_URL }}js/bootstrap.js"></script>
+	<script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.js"></script>
 	<style type="text/css">
 	.container{
 		width:720px;
@@ -172,6 +172,7 @@
 		});
 
 		$("#modal-compartilhar").click(function(){
+			console.log("clicou");
 			var token = $("#token").val() 
 				dados = [];
 				for (var i = 1; i < 12;i++){

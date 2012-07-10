@@ -6,10 +6,10 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
-    url(r'^$', direct_to_template, {
-        'template': 'home.html'
-    }, name='home'),
-    url(r'^time/$', 'app.views.time', name='time'),
+    # url(r'^$', direct_to_template, {
+    #     'template': 'home.html'
+    # }, name='home'),
+    url(r'^$', 'app.views.time', name='time'),
     url(r'^compartilhar', 'app.views.compartilhar', name='compartilhar'),
     # url(r'^maketeam/', include('maketeam.foo.urls')),
 
