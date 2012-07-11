@@ -95,7 +95,7 @@
 </style>
 	
 	<script type="text/javascript">
-
+		
 		$(function() {
 		
 		$('.draggable2').live('mouseenter', function() {
@@ -185,7 +185,6 @@
 		});
 
 		$("#modal-compartilhar").click(function(){
-			console.log("clicou");
 			var token = $("#token").val() 
 				dados = [];
 				for (var i = 1; i < 12;i++){
@@ -194,6 +193,20 @@
 					var y = $("#foto"+i).css("top");
 					dados.push({"id":id , "x":x , "y":y})
 				}
+				$("#myModal .alert-atencao").removeClass("hide");
+				$("#myModal .progress").removeClass("hide");
+				var widthBar = 0;
+				var myInterval = setInterval(function() {
+			          $("#myModal .bar").css("width", "+=5");
+			          if (parseInt($("#myModal .bar").css("width")) > 250){
+			          	clearInterval(myInterval);
+			          	$("#myModal .alert-atencao").addClass("hide");
+			          	$("#myModal .alert-success").removeClass("hide");
+			          	$("#myModal .progress").removeClass("progress-striped");
+			          	$("#myModal .progress").removeClass("active");
+			          }
+			    }, 500);
+				
 			$.ajax({
 		     		type: "POST",
 		     		url: "/compartilhar",
@@ -249,6 +262,28 @@ var posicoes = [{"x":"256", "y":"230"},
 	<div style="width:250px;height:200px;float:left;">
     	<p>Para compartilhar sua escalação, dê um nome ao seu time e clique em compartilhar</p>
     	<input type="text" name="nomeTime" placeholder="Nome do time" style="width:250px;height:28px;" />
+    	<br>
+    	<div class="alert alert-atencao hide" style="margin-top: 30px;">
+	    	<button class="close" data-dismiss="alert">×</button>
+	    	<strong>Aguarde!</strong>
+	    	<br>
+	    	Seu time está sendo escalado
+	    </div>
+	    <div class="alert alert-success hide" style="margin-top: 30px;">
+	    	<button class="close" data-dismiss="alert">×</button>
+	    	<strong>Parabéns!</strong>
+	    	<br>
+	    	Time foi escalado com sucesso!
+	    </div>
+	    <div class="alert alert-error hide" style="margin-top: 30px;">
+	    	<button class="close" data-dismiss="alert">×</button>
+	    	<strong>Falha!</strong>
+	    	<br>
+	    	Ocorreu um erro inesperado enquanto seu time estava sendo montado, por favor tente novamente mais tarde
+	    </div>
+    	<div class="progress progress-striped active hide">
+	    	<div class="bar" style="width: 0px;"></div>
+	    </div>
 	</div>
     </div>
     <div class="modal-footer">
@@ -280,7 +315,7 @@ var posicoes = [{"x":"256", "y":"230"},
 							<div class="ui-widget">
 								<div class="input-prepend">
 									<span class="add-on"><i class="icon-user"></i></span>
-									<input id="city" type="text" style="width:250px;height:28px;" />
+									<input id="city" type="text" placeholder="nome do amigo" style="width:250px;height:28px;" />
 								</div>
 							</div>
 							</div>
