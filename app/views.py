@@ -5,7 +5,7 @@ from fandjango.decorators import facebook_authorization_required
 import json
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from util.funcoes import montar_imagem
+from util.funcoes import montar_imagem, montar_marcacao
 from facepy import GraphAPI
 from facepy import SignedRequest
 
@@ -27,8 +27,12 @@ def compartilhar(request):
 	dados = request.POST
 	token = request.POST['token']
 	imagem = montar_imagem(dados)
-	# tags = montar_marcacao(dados)
+
+	tags = montar_marcacao(dados)
+	
+	tags = json.dumps(tags)
+	
 	signed_request = SignedRequest.parse(token, settings.FACEBOOK_APPLICATION_SECRET_KEY)
 	graph = GraphAPI(signed_request['oauth_token'])
-	post = graph.post(path="me/photos", tags="[{'tag_uid':'100003016125914'},{'tag_uid':'100003798651396'}]", message="Vote na sua banda favorita e acompanhem em tempo real essa disputa!!! acesse: http://apps.facebook.com/maketeam2", source=open(imagem))
+	post = graph.post(path="me/photos", tags=tags, message="Vote na sua banda favorita e acompanhem em tempo real essa disputa!!! acesse: http://apps.facebook.com/maketeam2", source=open(imagem))
 	return HttpResponse(json.dumps(post))

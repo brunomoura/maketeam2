@@ -6,7 +6,7 @@ from django.conf import settings
 
 def montar_imagem(dic):
 
-	fundo = Image.open('/home/bruno/projetos django/maketeam2/maketeam/static/img/campo.jpg') 
+	fundo = Image.open('/home/bruno/maketeam2/maketeam/static/img/campo.jpg') 
 	# dic = {"data" : [
 	# {"id" : "100003016125914"	,"x": "40","y": "50"}]
 	# }
@@ -25,23 +25,23 @@ def montar_imagem(dic):
 		foto = Image.open(foto)
 		fundo.paste(foto, (x, y))
 
-	fundo.save("/home/bruno/projetos django/maketeam2/maketeam/static/img/teste.jpg","jpeg")
-	imagem = "/home/bruno/projetos django/maketeam2/maketeam/static/img/teste.jpg"
+	fundo.save("/home/bruno/maketeam2/maketeam/static/img/teste.jpg","jpeg")
+	imagem = "/home/bruno/maketeam2/maketeam/static/img/teste.jpg"
 	return imagem
 	
-# def montar_marcacao(dic):
+def montar_marcacao(dic):
 
-# 	tags = []
+	tags = []
 
-# 	for i in range(0,11):
-# 		x = "dados[%d][x]" % (i)
-# 		y = "dados[%d][y]" % (i) 
+	for i in range(0,11):
+		x = "dados[%d][x]" % (i)
+		y = "dados[%d][y]" % (i)  
 
-# 		x = int(dic[x][0:3])-160 
-# 		y = int(dic[y][0:3])-150
+		x = (int(dic[x][0:3])-160)/100 
+		y = (int(dic[y][0:3])-150)/100
 		
-# 		user_id = "dados[%s][id]" % (str(i))
+		user_id = "dados[%s][id]" % (str(i))
+		user_id = str(dic[user_id])
+		tags.append({'tag_uid': user_id, 'x': str(x), 'y': str(y)})
 
-# 		tags.append({'tag_uid': user_id, 'x': '30', 'y': '50'})
-
-# 	return "'%s'" % tags
+	return tags
