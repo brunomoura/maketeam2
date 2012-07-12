@@ -37,11 +37,14 @@ def montar_marcacao(dic):
 		x = "dados[%d][x]" % (i)
 		y = "dados[%d][y]" % (i)  
 
-		x = (int(dic[x][0:3])-160)/100 
-		y = (int(dic[y][0:3])-150)/100
+		x = ((int(dic[x][0:3])-150)*100)/391
+		y = ((int(dic[y][0:3])-160)*100)/626
+		
+		x = str(x)
+		y = str(y)
 		
 		user_id = "dados[%s][id]" % (str(i))
 		user_id = str(dic[user_id])
-		tags.append({'tag_uid': user_id, 'x': str(x), 'y': str(y)})
+		tags.append({'tag_uid': user_id, 'x': x, 'y': y})
 
 	return tags
