@@ -103,6 +103,11 @@
 		color:red;
 		opacity: 0.54;
 	}
+	.caixa-alert{
+		width:283px;
+		height: 27px;
+		float:left;
+	}
 </style>
 	
 	<script type="text/javascript">
@@ -114,8 +119,12 @@
 		  
 		});
 
-		$('.jogador').live('mouseenter', function() {
-		  $("#close"+ $(this).attr("data-cont")).show();		  
+		$('.draggable2').live('mouseenter', function() {
+			var left = parseInt($(this).css("left")) + 41;
+			var top = parseInt($(this).css("top")) - 6;
+			$("#close"+ $(this).attr("data-cont")).css("top",top);
+			$("#close"+ $(this).attr("data-cont")).css("left",left);
+		  	$("#close"+ $(this).attr("data-cont")).show();		  
 		});
 		
 
@@ -123,8 +132,16 @@
 		  $(".close").hide();
 		});
 
+		$('.close').live('click', function() {
+		  	var numero = $(this).attr("data-cont");
+			$("#foto"+numero).remove();
+			$("#close"+numero).remove();
+		});
+
 		$( ".draggable" ).draggable({ revert: "valid" });
-		$( ".draggable2" ).draggable({ revert: "invalid" });
+		$( ".draggable2" ).draggable({ 
+			revert: "invalid"			
+			 });
 
 		$( "#droppable" ).droppable({
 			activeClass: "ui-state-hover",
@@ -147,18 +164,32 @@
 					
 					for (var i=0;i < $(".draggable2").length; i++){
 						if ($(".draggable2").eq(i).attr('data-id') == ui.item.id){
-							alert("jogador já escalado!");
+							$(".caixa-alert .alert").html("Este jogador já foi escalado!")
+							$(".caixa-alert .alert").removeClass("hide");
+							setTimeout(function(){
+								$(".caixa-alert .alert").addClass("hide");
+							}, 3000);
 							return false;
 						}
 					}
-					$("#banco-reserva").append("<img data-id='"+ ui.item.id +"' style='position:absolute;display:none' rel='tooltip' title='"+ ui.item.name +"' class='draggable2 ui-widget-content' src='http://graph.facebook.com/" + ui.item.id + "/picture' />");
-					$( ".draggable2" ).draggable({ revert: "invalid" });
+					$("#banco-reserva").append("<a class='close' id='close"+ (cont+1) +"' data-cont='"+ (cont+1) +"' title='Excluir amigo'  href='javascript:;'>&times;</a><img id='foto"+ (cont+1) +"' data-id='"+ ui.item.id +"' style='position:absolute;display:none' rel='tooltip' title='"+ ui.item.name +"' class='draggable2 ui-widget-content' data-cont='"+ (cont+1) +"' src='http://graph.facebook.com/" + ui.item.id + "/picture' />");
+					cont++;
+
+					$( ".draggable2" ).draggable({ 
+						revert: "invalid",
+						start: function( event, ui){
+							$(".close").hide();
+						} });
 					setTimeout(function(){
 						$("#banco-reserva img").fadeIn("slow");
 						$("#city").val("");
 					}, 1000);
 				}else{
-					alert("time completo");
+					$(".caixa-alert .alert").html("Seu time já está completo!")
+					$(".caixa-alert .alert").removeClass("hide");
+					setTimeout(function(){
+						$(".caixa-alert .alert").addClass("hide");
+					}, 3000);
 				}
 				
 			}
@@ -179,7 +210,7 @@
 		    			var nome = friends[numero]['name'];
 		    			arrayNumeros.push(numero);
 		    			arrayIds.push({"id":id,"nome":nome});
-		    			$("#banco-reserva").append("<a class='close jogador' id='close"+ (contador+1) +"' title='Excluir amigo' style='top: "+ (String(parseInt(posicoes[contador].y)-6)) +"px;left: "+ (String(parseInt(posicoes[contador].x)+41)) +"px' href='#'>&times;</a><img id='foto"+ (contador+1) +"' data-id='"+ id +"' style='position:absolute;top: "+ posicoes[contador].y +"px;left: "+ posicoes[contador].x +"px;display:none' rel='tooltip' title='"+ nome +"' class='draggable2 ui-widget-content jogador' data-cont='"+ (contador+1) +"' src='http://graph.facebook.com/" + id + "/picture' />");
+		    			$("#banco-reserva").append("<a class='close' id='close"+ (contador+1) +"' data-cont='"+ (contador+1) +"' title='Excluir amigo' style='top: "+ (String(parseInt(posicoes[contador].y)-6)) +"px;left: "+ (String(parseInt(posicoes[contador].x)+41)) +"px' href='javascript:;'>&times;</a><img id='foto"+ (contador+1) +"' data-id='"+ id +"' style='position:absolute;top: "+ posicoes[contador].y +"px;left: "+ posicoes[contador].x +"px;display:none' rel='tooltip' title='"+ nome +"' class='draggable2 ui-widget-content' data-cont='"+ (contador+1) +"' src='http://graph.facebook.com/" + id + "/picture' />");
 		    			contador++;
 		    		}
 		    		if (arrayIds.length == 11){
@@ -191,7 +222,11 @@
 		    	setTimeout(function(){
 						$("#banco-reserva img").fadeIn("slow");
 					}, 1000);
-				$( ".draggable2" ).draggable({ revert: "invalid" });
+				$( ".draggable2" ).draggable({ 
+						revert: "invalid",
+						start: function( event, ui){
+							$(".close").hide();
+						} });
 
 		    	
 		});
@@ -200,6 +235,12 @@
 				
 				if ($(".draggable2").length == 11){
 					$('#myModal').modal('toggle');
+				}else{
+					$(".caixa-alert .alert").html("Seu time não está completo!")
+					$(".caixa-alert .alert").removeClass("hide");
+					setTimeout(function(){
+						$(".caixa-alert .alert").addClass("hide");
+					}, 3000);
 				}
 
 				
@@ -254,6 +295,7 @@
 
 	
 	<script type="text/javascript">
+var cont = 0;
 var friends = {{ friends|safe }}
 var posicoes = [{"x":"256", "y":"230"},
 				{"x":"417", "y":"230"},
@@ -344,10 +386,13 @@ var posicoes = [{"x":"256", "y":"230"},
 					</tr>
 					<tr>
 						<td>
-							<!-- <span id="sortear" class="botao">Sortear</span> -->
-							<!-- <span id="compartilhar" class="botao">Compartilhar</span> -->
-							<a href="#" rel='tooltip' title="Escalar time aleatoriamente" style="margin: 28px 0 0 28px" id="sortear" class="btn btn-primary"><i class="icon-random icon-white" style="margin-top:1px;"></i> Sortear</a>
-							<a href="#" rel='tooltip' title="Compartilhar time no facebook" style="margin-top:28px;" id="compartilhar" class="btn btn-primary"><i class="icon-share icon-white"></i> Compartilhar</a>
+							<div class="caixa-alert">
+								<div class="alert alert-error hide" style="padding: 2px 35px 2px 14px;">
+							    teste
+							    </div>
+							</div>
+							<a href="#" rel='tooltip' title="Escalar time aleatoriamente" style="margin: 2px 0 0 28px" id="sortear" class="btn btn-primary"><i class="icon-random icon-white" style="margin-top:1px;"></i> Sortear</a>
+							<a href="#" rel='tooltip' title="Compartilhar time no facebook" style="margin-top:2px;" id="compartilhar" class="btn btn-primary"><i class="icon-share icon-white"></i> Compartilhar</a>
 						</td>
 					</tr>
 				</table>
