@@ -133,7 +133,15 @@
 		});
 
 		$('.close').live('click', function() {
-		  	var numero = $(this).attr("data-cont");
+			var numero = $(this).attr("data-cont");
+			$("#jogador-exclusao").val(numero);
+			$('#modal-excluir').modal('toggle');
+		  	
+		});
+
+		$('#excluir-jogador').live('click', function() {
+			$('#modal-excluir').modal('toggle');
+			var numero = $("#jogador-exclusao").val();		  	
 			$("#foto"+numero).remove();
 			$("#close"+numero).remove();
 		});
@@ -311,6 +319,20 @@ var posicoes = [{"x":"256", "y":"230"},
 				]
 </script>
 <div class="container">
+	<div class="modal hide" id="modal-excluir">
+    <div class="modal-header">
+    <button type="button" class="close close-modal" data-dismiss="modal">×</button>
+    <h3>Confirmação de exclusão</h3>
+    </div>
+    <div class="modal-body">
+    <p>Tem certeza que deseja excluir este jogador?<p>
+    <input type="hidden" id="jogador-exclusao" value="" />
+    </div>
+    <div class="modal-footer">
+    <a href="javascript:;" class="btn close-modal" data-dismiss="modal">Não</a>
+    <a href="javascript:;" id="excluir-jogador" class="btn btn-primary">Sim</a>
+    </div>
+    </div>
 	
 	<div class="modal hide" id="myModal">
     <div class="modal-header">
