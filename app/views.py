@@ -9,7 +9,7 @@ from util.funcoes import montar_imagem, montar_marcacao
 from facepy import GraphAPI
 from facepy import SignedRequest
 
-# @facebook_authorization_required
+@facebook_authorization_required
 def time(request):
 	friends = request.facebook.user.graph.get('me/friends')
 	usuario = {u"name": request.facebook.user.first_name+' '+request.facebook.user.last_name, u"id": request.facebook.user.facebook_id} 
