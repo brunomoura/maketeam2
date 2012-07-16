@@ -255,6 +255,14 @@
 		});
 
 		$("#modal-compartilhar").click(function(){
+			if ($("#myModal .control-group input").val() == ""){
+				$("#myModal .control-group").addClass("error");
+				return false;	
+			}else{
+				$("#myModal .control-group").removeClass("error");
+			}
+			// console.log($("#myModal .control-group input").val());
+			
 			var token = $("#token").val() 
 				dados = [];
 				for (var i = 1; i < 12;i++){
@@ -274,6 +282,7 @@
 			          	$("#myModal .alert-success").removeClass("hide");
 			          	$("#myModal .progress").removeClass("progress-striped");
 			          	$("#myModal .progress").removeClass("active");
+			          	$("#btn-concluir").removeClass("hide");
 			          }
 			    }, 500);
 				
@@ -346,7 +355,9 @@ var posicoes = [{"x":"256", "y":"230"},
 	</div>
 	<div style="width:250px;height:200px;float:left;">
     	<p>Para compartilhar sua escalação, dê um nome ao seu time e clique em compartilhar</p>
-    	<input type="text" name="nomeTime" placeholder="Nome do time" style="width:250px;height:28px;" />
+    	<div class="control-group">
+    		<input type="text" name="nomeTime" placeholder="Nome do time" style="width:250px;height:28px;" />
+    	</div>
     	<br>
     	<div class="alert alert-atencao hide" style="margin-top: 30px;">
 	    	<button class="close" data-dismiss="alert">×</button>
@@ -369,6 +380,7 @@ var posicoes = [{"x":"256", "y":"230"},
     	<div class="progress progress-striped active hide">
 	    	<div class="bar" style="width: 0px;"></div>
 	    </div>
+	    <a class="btn btn-success hide close-modal" id="btn-concluir" href="javascript:;"><i class="icon-ok-sign icon-white"> </i> Concluir</a>
 	</div>
     </div>
     <div class="modal-footer">
