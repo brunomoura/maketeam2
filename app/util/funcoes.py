@@ -1,12 +1,17 @@
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import urllib2
 import cStringIO
 from django.conf import settings
 
 
-def montar_imagem(dic):
+def montar_imagem(dic, nome_time):
 
-	fundo = Image.open('/home/bruno/maketeam2/maketeam/static/img/campo.jpg') 
+	fundo = Image.open(settings.STATICFILES_DIRS[0]+'/img/campo.jpg')
+	fontFile = "/usr/share/fonts/truetype/freefont/FreeSansBold.ttf"
+	font = ImageFont.truetype(fontFile, 20)
+
+	draw = ImageDraw.Draw(fundo)
+	draw.text((2,2), nome_time, font=font)
 	# dic = {"data" : [
 	# {"id" : "100003016125914"	,"x": "40","y": "50"}]
 	# }
@@ -24,9 +29,13 @@ def montar_imagem(dic):
 		foto = cStringIO.StringIO(urllib2.urlopen(url).read()) 
 		foto = Image.open(foto)
 		fundo.paste(foto, (x, y))
-
-	fundo.save("/home/bruno/maketeam2/maketeam/static/img/teste.jpg","jpeg")
-	imagem = "/home/bruno/maketeam2/maketeam/static/img/teste.jpg"
+	
+	
+	try:
+		imagem = settings.MEDIA_ROOT+"/user_upload/%s.jpg" % nome_time
+		fundo.save(imagem) 
+	except:
+		imagem = False
 	return imagem
 	
 def montar_marcacao(dic):

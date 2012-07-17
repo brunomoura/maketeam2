@@ -11,6 +11,7 @@ from facepy import SignedRequest
 
 @facebook_authorization_required
 def time(request):
+
 	friends = request.facebook.user.graph.get('me/friends')
 	usuario = {u"name": request.facebook.user.first_name+' '+request.facebook.user.last_name, u"id": request.facebook.user.facebook_id} 
 	friends['data'].append(usuario)
@@ -26,7 +27,12 @@ def compartilhar(request):
 
 	dados = request.POST
 	token = request.POST['token']
-	imagem = montar_imagem(dados)
+	nome_time = request.POST['nome_time']
+
+	imagem = montar_imagem(dados, nome_time)
+
+	if imagem == False:
+		return HttpResponse("Nome de time invalido")
 
 	tags = montar_marcacao(dados)
 	
@@ -34,5 +40,5 @@ def compartilhar(request):
 	
 	signed_request = SignedRequest.parse(token, settings.FACEBOOK_APPLICATION_SECRET_KEY)
 	graph = GraphAPI(signed_request['oauth_token'])
-	post = graph.post(path="me/photos", tags=tags, message="Vote na sua banda favorita e acompanhem em tempo real essa disputa!!! acesse: http://apps.facebook.com/maketeam2", source=open(imagem))
+	post = graph.post(path="me/photos", tags=tags, message="Monte seu time de futebol com seus amigos!!! acesse: http://apps.facebook.com/maketeam", source=open(imagem))
 	return HttpResponse(json.dumps(post))

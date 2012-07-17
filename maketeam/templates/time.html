@@ -255,6 +255,8 @@
 		});
 
 		$("#modal-compartilhar").click(function(){
+			var nome_time = $("#nometime").val() 
+
 			if ($("#myModal .control-group input").val() == ""){
 				$("#myModal .control-group").addClass("error");
 				return false;	
@@ -289,7 +291,7 @@
 			$.ajax({
 		     		type: "POST",
 		     		url: "/compartilhar",
-		     		data: {"dados" : dados, "token": token}, 
+		     		data: {"dados" : dados, "token": token, "nome_time": nome_time}, 
 		     		dataType:"json",
 		     		success: function(conteudo){    			
 		     			
@@ -356,7 +358,7 @@ var posicoes = [{"x":"256", "y":"230"},
 	<div style="width:250px;height:200px;float:left;">
     	<p>Para compartilhar sua escalação, dê um nome ao seu time e clique em compartilhar</p>
     	<div class="control-group">
-    		<input type="text" name="nomeTime" placeholder="Nome do time" style="width:250px;height:28px;" />
+    		<input type="text" id="nometime" name="nomeTime" placeholder="Nome do time" style="width:250px;height:28px;" />
     	</div>
     	<br>
     	<div class="alert alert-atencao hide" style="margin-top: 30px;">
