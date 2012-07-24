@@ -10,6 +10,7 @@ urlpatterns = patterns('',
     #     'template': 'home.html'
     # }, name='home'),
     url(r'^$', 'app.views.time', name='time'),
+    url(r'^(?P<fanpage_id>\d+)/$', 'app.views.time', name='time_fanpage'),
     url(r'^compartilhar', 'app.views.compartilhar', name='compartilhar'),
     # url(r'^maketeam/', include('maketeam.foo.urls')),
 

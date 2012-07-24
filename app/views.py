@@ -8,10 +8,17 @@ from django.views.decorators.csrf import csrf_exempt
 from util.funcoes import montar_imagem, montar_marcacao
 from facepy import GraphAPI
 from facepy import SignedRequest
+from fanpage.models import Fanpage
 
 @facebook_authorization_required
-def time(request):
-
+def time(request,fanpage_id=1):
+	try:
+		fanpage = Fanpage.objects.get(pk=fanpage_id)
+		if not fanpage.status:
+			fanpage_id = 1	
+	except:
+		fanpage_id = 1
+	request.session['fanpage_id'] = fanpage_id
 	friends = request.facebook.user.graph.get('me/friends')
 	usuario = {u"name": request.facebook.user.first_name+' '+request.facebook.user.last_name, u"id": request.facebook.user.facebook_id} 
 	friends['data'].append(usuario)
